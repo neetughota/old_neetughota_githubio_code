@@ -1,157 +1,1231 @@
-<!DOCTYPE html>
-<html>
-  <head>
+<!doctype html>
+<html lang="en">
+
+<head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <!--[if lt IE 9]>
-      <script type="text/javascript" src="https://raw.github.com/shawnbot/aight/master/aight.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/sizzle/1.4.4/sizzle.min.js"></script>
-    <![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/2.10.0/d3.v2.min.js"></script>
-    
-    <style>
-      h1 {
-        font: 16px sans-serif;
-        font-weight: bold;
-        text-decoration: underline;
-      }
-      
-      div {
-        height: 17px;
-      }
-      div.container {
-        float: left;
-        width: 50%;
-      }
-      div.negative {
-        float: right;
-        background-color: brown;
-      }
-      div.positive {
-        background-color: steelblue;
-      }
-      
-      table {
-        font: 14px sans-serif;
-        vertical-align: middle;
-        text-align: left;
-        border-collapse: collapse;
-      }
-      
-      td,th {
-        padding-top: 2px;
-        padding-bottom: 2px;
-      }
-      
-      tr.even {
-        background-color: whitesmoke; 
-      }
-      
-      td.chart {
-        background-color: white; 
-      }
-      
-      
-      th {
-        padding-left: 10px;
-      }
-      
-      th.total {
-        text-align: right;
-      }
-      
-      td.data {
-        padding-left: 10px;
 
-      }
-      td.value {
-        text-align: right;
-      }
-      
-    </style>
-  </head>
-  
-  <body>
-  <h1>Points Per Game (PPG)</h1>
+    <title>NBA 2018/2019 Regular Season</title>
+
+    <meta name="description" content="NBA 2018-2019 Regular Season">
+    <meta name="author" content="Neetu Ghota">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/theme/beige.css" id="theme">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/bubble_chart.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Load D3 -->
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- Printing and PDF exports -->
     <script>
-      var chartWidth = "100px",
-          percent = d3.format(".2%");
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
 
-      var data = [
-        ["Credit", 0.040],
-        ["Relative Value", 0.008],
-        ["Multi-Strategy", 0.030],
-        ["Event Driven", 0.004],
-        ["Equities", 0.047],
-        ["Macro", - 0.02],
-        ["Commodities", 0.001],
-        ["Portfolio Hedges", - 0.004],
-        ["Other", - 0.002]
-      ];
-      
-      var total = d3.sum(data, function(d, i) { return d[1]; });
-      
-      console.log(total);
-      
-      // Sort the data in descending order
-      data.sort(function(a, b) {return d3.descending(a[1], b[1])});
-      
-      // Setup the scale for the values for display, use abs max as max value
-      var x = d3.scale.linear()
-          .domain([0, d3.max(data, function(d) { return Math.abs(d[1]); })])
-          .range(["0%", "100%"]);
+    <style>
+        .axis {
+            stroke-width: 1px;
+            stroke: white;
+            fill: white font-size: 12px;
+        }
 
-      
-      var table = d3.select("body").append("table");
-      
+        .category-name {
+            font-size: 20px;
+            margin: 0 !important;
+        }
 
-      
-      
-      // Create a table with rows and bind a data row to each table row
-      var tr = table.selectAll("tr.data")
-          .data(data)
-        .enter()
-          .append("tr")
-          .attr("class", "datarow");
-      
-      // Set the even columns
-      d3.selectAll(".datarow").filter(":nth-child(even)").attr("class", "datarow even")
-      
-      
-      // Create the name column
-      tr.append("td").attr("class", "data name")
-          .text(function(d) { return d[0] });
-          
-      // Create the percent value column
-      tr.append("td").attr("class", "data value")
-          .text(function(d) { return percent(d[1]) })
+        .key-dot {
+            display: inline-block;
+            height: 12px;
+            margin-right: .5em;
+            width: 12px;
 
-      // Create a column at the beginning of the table for the chart
-      var chart = tr.append("td").attr("class", "chart").attr("width", chartWidth);
-      
-      // Create the div structure of the chart
-      chart.append("div").attr("class", "container").append("div").attr("class", "negative");
-      chart.append("div").attr("class", "container").append("div").attr("class", "positive");
+        }
 
-      // Creates the negative div bar
-      tr.select("div.negative")
-        .style("width", "0%")
-        .transition()
-        .duration(500)
-          .style("width", function(d) { return d[1] > 0 ? "0%" : x(Math.abs(d[1]));});
 
-      // Creates the positive div bar
-      tr.select("div.positive")
-        .style("width", "0%")
-        .transition()
-        .duration(500)
-          .style("width", function(d) { return d[1] > 0 ? x(d[1]) : "0%"; });
-      
-      // Add the Total row
-      var totalRow = table.append("tr");
-      totalRow.append("th").attr("class", "totalDesc").text("Total Return");
-      totalRow.append("th").attr("class", "total").text(percent(total));
+        .Dessert {
+            background: #FF6138
+        }
+
+        .Drink {
+            background: #FFFF9D
+        }
+
+        .Food {
+            background: #BEEB9F
+        }
+
+        .Sides {
+            background: #00A388
+        }
+
+        #categoryLegend {
+            overflow: hidden;
+            font-size: 15px;
+
+        }
+
+        #backh2 {
+            color: antiquewhite;
+        }
+
+        #smallBack {
+            color: navajowhite;
+            font-style: italic;
+        }
+
+
+        .categoryLegend {
+            float: left;
+            margin-right: 1em;
+
+        }
+
+        .area {
+            fill: orange;
+            fill-opacity: 0.6;
+            clip-path: url(#clip);
+        }
+
+        .zoom {
+            cursor: move;
+            fill: none;
+            pointer-events: all;
+        }
+    </style>
+
+
+    <!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+    // Neetu
+    <div>
+        <div class="home__module / home__leaders">
+            <div class="home__module-header / home__leaders-header">
+                <h1 class="header-title">Season Leaders
+                    <!---->
+                    <!---->
+                </h1>
+                <div class="home__leaders-header__switch">
+                    <a class="switch-btn active" tabindex="0" ng-class="{'active':isPlayers}" ng-click="headersSwitch()"
+                        ng-keyup="$event.keyCode == 13 ? headersSwitch() : null">PLAYERS</a>
+                </div>
+    
+            </div>
+    
+            <div class="home__leaders-body [ row / collapsed ]">
+    
+                <!-- players -->
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Points Per Game
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201935/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__PTS" href="/player/201935/">James
+                                            Harden</a>
+                                        <span>HOU</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        31.6
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/202695/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__PTS" href="/player/202695/">Kawhi
+                                            Leonard</a>
+                                        <span>TOR</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        30.5
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/202331/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__PTS" href="/player/202331/">Paul
+                                            George</a>
+                                        <span>OKC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        28.6
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201939/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__PTS" href="/player/201939/">Stephen
+                                            Curry</a>
+                                        <span>GSW</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        28.2
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203081/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__PTS" href="/player/203081/">Damian
+                                            Lillard</a>
+                                        <span>POR</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        26.9
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                            
+                                Rebounds Per Game
+                         </h2>
+                        
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203083/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__REB" href="/player/203083/">Andre
+                                            Drummond</a>
+                                        <span>DET</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        13.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203999/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__REB" href="/player/203999/">Nikola
+                                            Jokic</a>
+                                        <span>DEN</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        13.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203507/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__REB" href="/player/203507/">Giannis
+                                            Antetokounmpo</a>
+                                        <span>MIL</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        12.2
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203954/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__REB" href="/player/203954/">Joel
+                                            Embiid</a>
+                                        <span>PHI</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        10.5
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203991/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__REB" href="/player/203991/">Clint
+                                            Capela</a>
+                                        <span>HOU</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        10.3
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Assists Per Game
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201566/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__AST" href="/player/201566/">Russell
+                                            Westbrook</a>
+                                        <span>OKC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        10.6
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201937/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__AST" href="/player/201937/">Ricky
+                                            Rubio</a>
+                                        <span>UTA</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        8.6
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203110/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__AST" href="/player/203110/">Draymond
+                                            Green</a>
+                                        <span>GSW</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        8.5
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203999/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__AST" href="/player/203999/">Nikola
+                                            Jokic</a>
+                                        <span>DEN</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        8.4
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/101150/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__AST" href="/player/101150/">Lou
+                                            Williams</a>
+                                        <span>LAC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        7.7
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Blocks Per Game
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203497/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__BLK" href="/player/203497/">Rudy
+                                            Gobert</a>
+                                        <span>UTA</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.6
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203954/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__BLK" href="/player/203954/">Joel
+                                            Embiid</a>
+                                        <span>PHI</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.3
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203507/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__BLK" href="/player/203507/">Giannis
+                                            Antetokounmpo</a>
+                                        <span>MIL</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203924/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__BLK" href="/player/203924/">Jerami
+                                            Grant</a>
+                                        <span>OKC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201572/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__BLK" href="/player/201572/">Brook
+                                            Lopez</a>
+                                        <span>MIL</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        1.9
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Steals Per Game
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201152/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__STL" href="/player/201152/">Thaddeus
+                                            Young</a>
+                                        <span>IND</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.8
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201937/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__STL" href="/player/201937/">Ricky
+                                            Rubio</a>
+                                        <span>UTA</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.4
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/204060/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__STL" href="/player/204060/">Joe
+                                            Ingles</a>
+                                        <span>UTA</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.2
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201935/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__STL" href="/player/201935/">James
+                                            Harden</a>
+                                        <span>HOU</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.2
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/101108/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__STL" href="/player/101108/">Chris
+                                            Paul</a>
+                                        <span>HOU</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        2.2
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Field Goal Percentage
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/1626149/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG_PCT"
+                                            href="/player/1626149/">Montrezl Harrell</a>
+                                        <span>LAC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        73.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203500/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG_PCT" href="/player/203500/">Steven
+                                            Adams</a>
+                                        <span>OKC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        66.7
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/202324/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG_PCT" href="/player/202324/">Derrick
+                                            Favors</a>
+                                        <span>UTA</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        63.9
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/1627732/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG_PCT" href="/player/1627732/">Ben
+                                            Simmons</a>
+                                        <span>PHI</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        62.1
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/1628386/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG_PCT" href="/player/1628386/">Jarrett
+                                            Allen</a>
+                                        <span>BKN</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        59.4
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                            Three Pointers Made
+                            
+                        </h2>
+                        
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201939/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3M" href="/player/201939/">Stephen
+                                            Curry</a>
+                                        <span>GSW</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        92
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/202691/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3M" href="/player/202691/">Klay
+                                            Thompson</a>
+                                        <span>GSW</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        70
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203081/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3M" href="/player/203081/">Damian
+                                            Lillard</a>
+                                        <span>POR</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        59
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/202695/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3M" href="/player/202695/">Kawhi
+                                            Leonard</a>
+                                        <span>TOR</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        55
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/200768/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3M" href="/player/200768/">Kyle
+                                            Lowry</a>
+                                        <span>TOR</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        52
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Three Point Percentage
+                            
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">1.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/1628379/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3_PCT" href="/player/1628379/">Luke
+                                            Kennard</a>
+                                        <span>DET</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        60.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">2.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201936/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3_PCT" href="/player/201936/">Tyreke
+                                            Evans</a>
+                                        <span>IND</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        55.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">3.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203210/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3_PCT"
+                                            href="/player/203210/">JaMychal Green</a>
+                                        <span>LAC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        52.2
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">4.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/1628983/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3_PCT" href="/player/1628983/">Shai
+                                            Gilgeous-Alexander</a>
+                                        <span>LAC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        50.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="player.RANK">5.</td>
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/1627854/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FG3_PCT" href="/player/1627854/">Bryn
+                                            Forbes</a>
+                                        <span>SAS</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        48.4
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+                <section class="home__leaders-category [ columns / large-4 ]" ng-repeat="category in players.items"
+                    ng-show="isPlayers" aria-hidden="false">
+    
+                    <!-- season leaders header -->
+                    <div class="category-header">
+                        <h2 class="category-header__name">
+                                Fantasy Points Per Game
+                            
+                        </h2>
+                        <div class="clear"></div>
+                    </div>
+    
+    
+                    <div class="category-body">
+                        <table class="category-table">
+                            <tbody>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="!player.RANK">1.</td>
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203999/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FANTASY_POINTS"
+                                            href="/player/203999/">Nikola Jokic</a>
+                                        <span>DEN</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        57.0
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="!player.RANK">2.</td>
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201935/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FANTASY_POINTS"
+                                            href="/player/201935/">James Harden</a>
+                                        <span>HOU</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        54.4
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="!player.RANK">3.</td>
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/203507/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FANTASY_POINTS"
+                                            href="/player/203507/">Giannis Antetokounmpo</a>
+                                        <span>MIL</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        53.7
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="!player.RANK">4.</td>
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/202695/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FANTASY_POINTS"
+                                            href="/player/202695/">Kawhi Leonard</a>
+                                        <span>TOR</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        51.3
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                                <tr ng-repeat="player in category.playerstats">
+                                    <!---->
+                                    <!---->
+                                    <td class="category-table__rank" ng-if="!player.RANK">5.</td>
+                                    <!---->
+                                    <td class="category-table__text">
+                                        <a ng-href="/player/201566/" title="View Stats Profile"
+                                            aria-labelledby="leaders_season_players__FANTASY_POINTS"
+                                            href="/player/201566/">Russell Westbrook</a>
+                                        <span>OKC</span>
+                                    </td>
+                                    <!---->
+                                    <td class="category-table__value" ng-if="!player.GAME_ID">
+                                        49.7
+                                    </td>
+                                    <!---->
+                                    <!---->
+                                </tr>
+                                <!---->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <!---->
+    
+            </div>
+    
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+        // More info https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+
+            transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+            // More info https://github.com/hakimel/reveal.js#dependencies
+            dependencies: [
+                { src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true },
+                { src: 'plugin/notes/notes.js', async: true }
+            ]
+        });
 
     </script>
-  </body>
+    <script src="scripts/top20.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.js"></script>
+
+    <script src="scripts/areaChart.js"></script>
+    <script src="scripts/tooltip.js"></script>
+    <script src="scripts/bubble_chart.js"></script>
+
+
+
+</body>
+
 </html>
