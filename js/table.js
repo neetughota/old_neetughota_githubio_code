@@ -48,7 +48,7 @@ var ppg = tabulate(data,columns)
 
 ppg.selectAll("tbody tr") 
            .sort(function(a, b) {
-             return d3.descending(a.PPG, b.PPG);
+             return d3.descending(parseFloat(a.PPG), parseFloat(b.PPG));
            });
 })
 
