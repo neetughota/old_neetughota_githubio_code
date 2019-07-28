@@ -21,8 +21,10 @@ d3.csv('data.csv',function (data) {
     '<body>'+
         '<div> <div class= "container"> <div class="row">'+
             '<label>' + playerName +  '</label>'+
-            '<label>filteredData[0].Position </label>'+
-        '</div></div></div>'+
+         '<div class="row">'+
+            '<label style="border-right: 1px solid #fff;padding-right: 10px;">' + filteredData[0].Team + "|"  '</label>'+
+            '<label style="color: #fff;padding-left: 5px;">' +  filteredData[0].Position + '</label>'+      '
+  </div></div></div>'+
     '</body>';
     
   
