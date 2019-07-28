@@ -37,6 +37,15 @@ var tabulate = function (data,columns) {
  .append('td')
  .text(function (d) { return d.value })
 
+cells.filter(function(d, i) { return i === 0})
+    .append("a")
+    .attr("href", function(d) {
+        return "http://test/" + d.value;
+    })
+    .html(function(d) {
+        return (d.value);
+    });
+	
  return table;
 }
 
@@ -91,6 +100,15 @@ var tabulateNew = function (data,columns) {
  .append('td')
  .text(function (d) { return d.value })
 
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
+	
  return table;
 }
 
@@ -143,6 +161,14 @@ var tabulate2 = function (data,columns) {
  .append('td')
  .text(function (d) { return d.value })
 
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
  return table;
 }
 
@@ -196,6 +222,14 @@ var tabulate3 = function (data,columns) {
  .append('td')
  .text(function (d) { return d.value })
 
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
  return table;
 }
 
@@ -249,6 +283,14 @@ var tabulate4 = function (data,columns) {
  .append('td')
  .text(function (d) { return d.value })
 
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
  return table;
 }
 
@@ -304,6 +346,15 @@ var tabulate6 = function (data,columns) {
  .append('td')
  .text(function (d) { return d.value })
 
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
+	
  return table;
 }
 
@@ -351,7 +402,14 @@ var tabulate7 = function (data,columns) {
  .enter()
  .append('td')
  .text(function (d) { return d.value })
-
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
  return table;
 }
 
@@ -399,7 +457,14 @@ var tabulate8 = function (data,columns) {
  .enter()
  .append('td')
  .text(function (d) { return d.value })
-
+cells.filter(function (d, i) { return i === 0 })
+        .append("a")
+        .attr("href", function (d) {
+            return "http://test/" + d.value;
+        })
+        .html(function (d) {
+            return (d.value);
+        });
  return table;
 }
 
