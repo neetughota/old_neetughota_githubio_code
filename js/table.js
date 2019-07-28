@@ -37,7 +37,7 @@ var tabulate = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -98,7 +98,7 @@ var tabulateNew = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -159,7 +159,7 @@ var tabulate2 = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -220,7 +220,7 @@ var tabulate3 = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -281,7 +281,7 @@ var tabulate4 = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -344,7 +344,7 @@ var tabulate6 = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -401,7 +401,7 @@ var tabulate7 = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
@@ -456,7 +456,7 @@ var tabulate8 = function (data,columns) {
  .append('td')
 .html(function (d, i) {
         if (i === 0) {
-            return "<a href=\"player.html="+d.value+"\">" + d.value + "</a>";
+            return "<a href=\"player.html?player="+d.value+"\">" + d.value + "</a>";
         } else {
             return d.value;
         }
