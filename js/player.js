@@ -19,10 +19,10 @@ d3.csv('data.csv',function (data) {
 
   var html = ''+
     '<body>'+
-        '<div>'+
-            '<label>playerName</label>'+
-            '<label>filteredData.Position </label>'+
-        '</div>'+
+        '<div> <div class= "container"> <div class="row">'+
+            '<label>' + playerName +  '</label>'+
+            '<label>filteredData[0].Position </label>'+
+        '</div></div></div>'+
     '</body>';
     
   
