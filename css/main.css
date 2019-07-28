@@ -60,12 +60,10 @@ h1 {
     padding-left: 0;
     padding-right: 30px;
     margin-bottom: 30px;
+   width: 350px;
  
 }
 
-.large-4 {
-    width: 33.33333%;
-}
 .column, .columns {
     padding-left: .9375rem;
     padding-right: .9375rem;
