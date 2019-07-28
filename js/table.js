@@ -45,7 +45,11 @@ cells.filter(function(d, i) { return i === 0})
     .html(function(d) {
         return (d.value);
     });
-	
+
+cells.filter(function(d, i) { return i === 3})
+    .html(function(d) {
+        return (d.value + "%");
+    });
  return table;
 }
 
