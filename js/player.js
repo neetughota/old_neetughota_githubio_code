@@ -17,9 +17,7 @@ d3.csv('data.csv',function (data) {
           } 
     });
 
-  var html = ''+
-   
-        '<div class="row">'+
+  var html = '<div class="row">'+
             '<label>' + playerName +  '</label>' +
         '</div>'+
          '<div class="row">'+
@@ -29,7 +27,7 @@ d3.csv('data.csv',function (data) {
       '<div class="col"> <label> Prior: Boston Celtics </label> </div> <div class="col"> <label> Age:  22 </label> </div>'+   
       '</div>';
    
-    
+   document.getElementById('container').insertAdjacentHTML('beforeend',html);
   
-   document.write(html);
+   //document.write(html);
 })
