@@ -23,8 +23,10 @@ d3.csv('data.csv',function (data) {
             '<label>' + playerName +  '</label></div>'+
          '<div class="row">'+
             '<label style="border-right: 1px solid #fff;padding-right: 10px;">' + filteredData[0].Team + "|" + '</label>'+
-            '<label style="color: #fff;padding-left: 5px;">' +  filteredData[0].Position + '</label>'+ 
-         '</div></div></div>'+
+            '<label style="color: #fff;padding-left: 5px;">' +  filteredData[0].Position + '</label>'+
+          '</div><div class="row"> <div class="col"> <label> Ht:  6-5 </label> </div> <div class="col"> <label> Wt:  220lbs </label> </div>'+
+      '<div class="col"> <label> Prior: Boston Celtics </label> </div> <div class="col"> <label> Age:  22 </label> </div>'+   
+      '</div></div></div>'+
     '</body>';
     
   
