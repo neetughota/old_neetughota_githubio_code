@@ -20,7 +20,7 @@ var tabulate = function (data,columns) {
 	.data(columns)
 	.enter()
 	.append('th')
-	.text(function (d) { return d })
+	
 
 	var rows = tbody.selectAll('tr')
 	.data(data)
@@ -39,11 +39,17 @@ var tabulate = function (data,columns) {
 
  return table;
 }
+const data = await d3.csv('data.csv');
 
-d3.csv('data.csv',function (data) {
-	var columns = ['Name','Team','Position','PPG']
- tabulate(data,columns)
-})
+//d3.csv('data.csv',function (data) {
+var columns = ['Name','Team','Position','PPG']
+var ppg = tabulate(data,columns)
+
+ppg.selectAll("tbody tr") 
+           .sort(function(a, b) {
+             return d3.descending(a.PPG, b.PPG);
+           });
+//})
 
 var tabulateNew = function (data,columns) {
  var margin = {top: 20, right: 10, bottom: 20, left: 10}
