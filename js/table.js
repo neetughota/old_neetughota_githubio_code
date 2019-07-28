@@ -96,7 +96,11 @@ var tabulateNew = function (data,columns) {
 
 d3.csv('data.csv',function (data) {
 	var columns = ['Name','Team','Position','RPG']
- tabulateNew(data,columns)
+var rpg = tabulateNew(data,columns)
+	rpg.selectAll("tbody tr") 
+           .sort(function(a, b) {
+             return d3.descending(parseFloat(a.RPG), parseFloat(b.RPG));
+           });
 })
 
 
@@ -144,7 +148,12 @@ var tabulate2 = function (data,columns) {
 
 d3.csv('data.csv',function (data) {
 	var columns = ['Name','Team','Position','SPG']
- tabulate2(data,columns)
+var spg = tabulate2(data,columns)
+	
+	spg.selectAll("tbody tr") 
+           .sort(function(a, b) {
+             return d3.descending(parseFloat(a.SPG), parseFloat(b.SPG));
+           });
 })
 
 
@@ -192,7 +201,12 @@ var tabulate3 = function (data,columns) {
 
 d3.csv('data.csv',function (data) {
 	var columns = ['Name','Team','Position','APG']
- tabulate3(data,columns)
+ var apg = tabulate3(data,columns)
+ 
+	apg.selectAll("tbody tr") 
+           .sort(function(a, b) {
+             return d3.descending(parseFloat(a.APG), parseFloat(b.APG));
+           });
 })
 
 
@@ -240,7 +254,12 @@ var tabulate4 = function (data,columns) {
 
 d3.csv('data.csv',function (data) {
 	var columns = ['Name','Team','Position','OffRating']
- tabulate4(data,columns)
+ var blockpgame = tabulate4(data,columns)
+	
+	blockpgame.selectAll("tbody tr") 
+           .sort(function(a, b) {
+             return d3.descending(parseFloat(a.OffRating), parseFloat(b.OffRating));
+           });
 })
 
 
