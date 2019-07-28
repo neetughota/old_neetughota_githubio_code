@@ -1,6 +1,6 @@
 
-var playerName = getUrlVars()["player"];
-document.getElementById('playerName').innerHTML = decodeURI(playerName);
+var playerName = decodeURI(getUrlVars()["player"]);
+document.getElementById('playerName').innerHTML = playerName;
 function getUrlVars() {
   var vars = {};
   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
