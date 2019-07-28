@@ -48,7 +48,7 @@ d3.csv('data.csv',function (data) {
 var tabulateNew = function (data,columns) {
  var margin = {top: 20, right: 10, bottom: 20, left: 10}
  var width = 500 - margin.left - margin.right, height = 300 - margin.top - margin.bottom	
- var svg = d3.select("reboundspergame").append("svg")
+ var svg = d3.select("#reboundspergame").append("svg")
  .attr("width", width + margin.left + margin.right)
  .attr("height", height + margin.top + margin.bottom) 
  .append("g")
@@ -197,14 +197,7 @@ var tabulate4 = function (data,columns) {
  .attr("height", height + margin.top + margin.bottom) 
  .append("g")
  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
- var svgtext = svg.append("text")
- .attr("x",(width/2))
- .attr("y",0-(margin.top/4))
- .style("text-anchor","middle")
- .style("font-size","16px")
- .style("text-decoration","underline")
- .style("font-weight","bold")
- .text("Offensive Rating") 
+ 
  
  var forobj = svg.append("foreignObject")
  .attr("width", 300)
@@ -252,14 +245,7 @@ var tabulate5 = function (data,columns) {
  .attr("height", height + margin.top + margin.bottom) 
  .append("g")
  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
- var svgtext = svg.append("text")
- .attr("x",(width/2))
- .attr("y",0-(margin.top/4))
- .style("text-anchor","middle")
- .style("font-size","16px")
- .style("text-decoration","underline")
- .style("font-weight","bold")
- .text("Defensive Rating") 
+ 
  
  var forobj = svg.append("foreignObject")
  .attr("width", 300)
@@ -306,14 +292,7 @@ var tabulate6 = function (data,columns) {
  .attr("height", height + margin.top + margin.bottom) 
  .append("g")
  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
- var svgtext = svg.append("text")
- .attr("x",(width/2))
- .attr("y",0-(margin.top/4))
- .style("text-anchor","middle")
- .style("font-size","16px")
- .style("text-decoration","underline")
- .style("font-weight","bold")
- .text("Minutes per Game") 
+
  
  var forobj = svg.append("foreignObject")
  .attr("width", 300)
@@ -361,14 +340,7 @@ var tabulate7 = function (data,columns) {
  .attr("height", height + margin.top + margin.bottom) 
  .append("g")
  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
- var svgtext = svg.append("text")
- .attr("x",(width/2))
- .attr("y",0-(margin.top/4))
- .style("text-anchor","middle")
- .style("font-size","16px")
- .style("text-decoration","underline")
- .style("font-weight","bold")
- .text("Free Throw %") 
+ 
  
  var forobj = svg.append("foreignObject")
  .attr("width", 300)
@@ -416,14 +388,7 @@ var tabulate8 = function (data,columns) {
  .attr("height", height + margin.top + margin.bottom) 
  .append("g")
  .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
- var svgtext = svg.append("text")
- .attr("x",(width/2))
- .attr("y",0-(margin.top/4))
- .style("text-anchor","middle")
- .style("font-size","16px")
- .style("text-decoration","underline")
- .style("font-weight","bold")
- .text("Field Goal %") 
+ 
  
  var forobj = svg.append("foreignObject")
  .attr("width", 300)
