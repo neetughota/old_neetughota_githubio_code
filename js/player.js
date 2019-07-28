@@ -12,7 +12,7 @@ async function init(){
   const data = await d3.csv('data.csv');
   var filteredData = data.filter(function(d) 
   { 
-          if( d["Name"] == playerName ))
+          if( d["Name"] == playerName )
           { 
               return d;
           } 
