@@ -18,7 +18,14 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <body>
-        <script type="text/javascript">
+       
+        <div class="container">
+            <div class="row">
+                <label id="playerName"/>
+            </div>
+        </div>
+        
+         <script type="text/javascript">
             var playerName = getUrlVars()["player"];
              document.getElementById('#playerName').innerHTML = playerName;
             function getUrlVars() {
@@ -29,10 +36,5 @@
             return vars;
           }
         </script>
-        <div class="container">
-            <div class="row">
-                <label id="playerName"/>
-            </div>
-        </div>
     </body>
 </head>
