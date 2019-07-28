@@ -25,16 +25,6 @@
             </div>
         </div>
         
-         <script type="text/javascript">
-            var playerName = getUrlVars()["player"];
-             document.getElementById('playerName').innerHTML = decodeURI(playerName);
-            function getUrlVars() {
-              var vars = {};
-              var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-              vars[key] = value;
-            });
-            return vars;
-          }
-        </script>
+        <script src="/js/player.js"></script>
     </body>
 </head>
