@@ -8,9 +8,9 @@ function getUrlVars() {
   });
   return vars;
 }
-async function init(){
-  const data = await d3.csv('data.csv');
-  var filteredData =  data.forEach(function(d) {
+d3.csv('data.csv',function (data) {
+  
+  var filteredData =  data.filter(function(d) {
           if( d["Name"] == playerName )
           { 
               return d;
@@ -27,4 +27,4 @@ async function init(){
     
   
    document.write(html);
-}
+})
