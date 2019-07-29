@@ -26,12 +26,12 @@ var g = svg.append("g")
 d3.json("Roster.json", function(error, data) {
   	if (error) throw error;
   	var filteredData =  data.players.filter(function(d) {  if( d.name == playerName) {return d};});
-	var newData = {};
-	newData.Rating =[]; 
-	newData.RatingValue =[]; 
+	var newData = []; 
 	for (var key in filteredData[0]["ratings"][0]) {
-  		newData.Rating.push( key);
-		newData.RatingValue.push( filteredData[0]["ratings"][0][key]);
+		var newObj ={};
+  		newObj.Rating =  key;
+		newObj.RatingValue =( filteredData[0]["ratings"][0][key]); 
+		newData.push(newObj);
 	}
   	//data.sort(function(a, b) { return a.value - b.value; });
   
