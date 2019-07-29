@@ -62,7 +62,7 @@ d3.json("Roster.json", function(error, data) {
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
-                return y(d.Rating) + y.rangeBand() / 2 + 4;
+                return y(d.Rating) + y.bandwidth() / 2 + 4;
             })
             //x position is 3 pixels to the right of the bar
             .attr("x", function (d) {
