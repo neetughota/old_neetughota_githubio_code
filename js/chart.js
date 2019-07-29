@@ -19,7 +19,7 @@ var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 var x = d3.scaleLinear().range([0, width]);
 var y = d3.scaleBand().range([height, 0]).padding(.1);
-var cs = d3.scaleLinear().range([0,width]);
+var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var g = svg.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -65,7 +65,7 @@ d3.json("Roster.json", function(error, data) {
         .attr("height", y.bandwidth())
         .attr("y", function(d) { return y(d.Rating); })
         .attr("width", function(d) { return x(d.RatingValue); })
-	 .style('fill',function(d,i) {return cs(d);})
+	 .style('fill',function(d,i) {return color(i);})
         .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
