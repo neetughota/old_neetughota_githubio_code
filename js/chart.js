@@ -56,6 +56,19 @@ d3.json("Roster.json", function(error, data) {
         .attr("height", y.bandwidth())
         .attr("y", function(d) { return y(d.Rating); })
         .attr("width", function(d) { return x(d.RatingValue); })
+	
+        .on("mousemove", function(d){
+            tooltip
+              .style("left", d3.event.pageX - 50 + "px")
+              .style("top", d3.event.pageY - 70 + "px")
+              .style("display", "inline-block")
+              .html((d.Rating) + "<br>" +  + (d.RatingValue));
+        })
+    		.on("mouseout", function(d){ tooltip.style("display", "none");});
+	
+	g.selectAll(".bar")
+	.enter()
+            .append("g")
 	.append("text")
             .attr("class", "label")
             //y position of the label is halfway down the bar
@@ -69,13 +82,5 @@ d3.json("Roster.json", function(error, data) {
             .text(function (d) {
                 return d.RatingValue;
             })
-        .on("mousemove", function(d){
-            tooltip
-              .style("left", d3.event.pageX - 50 + "px")
-              .style("top", d3.event.pageY - 70 + "px")
-              .style("display", "inline-block")
-              .html((d.Rating) + "<br>" +  + (d.RatingValue));
-        })
-    		.on("mouseout", function(d){ tooltip.style("display", "none");});
 });
 
