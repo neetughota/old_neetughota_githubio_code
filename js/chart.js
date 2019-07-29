@@ -58,6 +58,19 @@ d3.json("Roster.json", function(error, data) {
         .attr("height", y.bandwidth())
         .attr("y", function(d) { return y(d.Rating); })
         .attr("width", function(d) { return x(d.RatingValue); })
+	.append("text")
+            .attr("class", "label")
+            //y position of the label is halfway down the bar
+            .attr("y", function (d) {
+                return y(d.Rating) + y.rangeBand() / 2 + 4;
+            })
+            //x position is 3 pixels to the right of the bar
+            .attr("x", function (d) {
+                return x(d.RatingValue) + 3;
+            })
+            .text(function (d) {
+                return d.value;
+            })
         .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
