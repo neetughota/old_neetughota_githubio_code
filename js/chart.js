@@ -38,7 +38,7 @@ d3.json("Roster.json", function(error, data) {
   
   	x.domain([0, d3.max(newData, function(d){ return  d.RatingValue ; })])
         y.domain(newData.map(function(d) { return d.Rating }));
- 	cs.domain(newData.map(function(d) { return d.Rating }));
+ 	color.domain(newData.map(function(d) { return d.Rating }));
     g.append("g")
         .attr("class", "x axis")
        	.attr("transform", "translate(0," + height + ")")
