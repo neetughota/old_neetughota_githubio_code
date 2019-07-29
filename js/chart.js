@@ -19,8 +19,6 @@ var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 var x = d3.scaleLinear().range([0, width]);
 var y = d3.scaleBand().range([height, 0]).padding(.1);
-
-          
 var cs = d3.scaleLinear().range([0,width]);
 
 var g = svg.append("g")
@@ -69,7 +67,7 @@ d3.json("Roster.json", function(error, data) {
                 return x(d.RatingValue) + 3;
             })
             .text(function (d) {
-                return d.value;
+                return d.RatingValue;
             })
         .on("mousemove", function(d){
             tooltip
