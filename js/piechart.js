@@ -52,12 +52,12 @@ var g = svg.append("g")
 	  .attr("fill",function(d,i) { 
 	
 		return color[i];
-	}).on("mousemove", function(d){
+	}).on("mousemove", function(d,i){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
               .style("top", d3.event.pageY - 70 + "px")
               .style("display", "inline-block")
-              .html((data_ready.data.key) + "<br>" +  + (data_ready.data.value));
+              .html((data_ready[i].data.key) + "<br>" +  + (data_ready[i].data.value));
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");});
 	
