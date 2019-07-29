@@ -42,7 +42,7 @@ d3.csv("data.csv", function(error, data) {
 	newData["2PA"] = parseInt(filteredData[0]["2PA"]);
 	newData["3PA"] = parseInt(filteredData[0]["3PA"]);
 	
-	var data_ready = pie(d3.entries([newData.FTA ,newData["2PA"],newData["3PA"]));
+	var data_ready = pie(d3.entries([newData.FTA ,newData["2PA"],newData["3PA"]]));
 	
 	g.selectAll("path")
 	  .data(pie(newData))
