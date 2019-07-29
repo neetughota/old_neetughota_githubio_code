@@ -66,8 +66,6 @@ var g = svg.append("g")
 	
   
   g.selectAll("path")
-	  .data(data_ready)
-	  .enter()
   	.append('text')
   	.text(function(d){ 
 	  return "grp " + d.data.key ;
