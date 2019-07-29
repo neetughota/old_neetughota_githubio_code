@@ -51,7 +51,7 @@ d3.json("Roster.json", function(error, data) {
 	 var bars = g.selectAll(".bar")
             .data(newData)
             .enter()
-            .append("g")
+            .append("g");
 
 	
    // g.selectAll(".bar")
@@ -59,7 +59,7 @@ d3.json("Roster.json", function(error, data) {
      //       .enter()
       //      .append("g")
 	 
-      bars.enter().append("rect")
+      bars.append("rect")
         .attr("class", "bar")
         .attr("x", 0)
         .attr("height", y.bandwidth())
