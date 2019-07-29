@@ -49,16 +49,17 @@ d3.json("Roster.json", function(error, data) {
         .call(d3.axisLeft(y));
 
 	 var bars = g.selectAll(".bar")
-            .data(data)
+            .data(newData)
             .enter()
             .append("g")
 
 	
-    g.selectAll(".bar")
-            .data(data)
-            .enter()
-            .append("g")
-      .enter().append("rect")
+   // g.selectAll(".bar")
+    //        .data(newData)
+     //       .enter()
+      //      .append("g")
+	 
+      bars.enter().append("rect")
         .attr("class", "bar")
         .attr("x", 0)
         .attr("height", y.bandwidth())
@@ -74,8 +75,8 @@ d3.json("Roster.json", function(error, data) {
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");});
 	
-	bars
-	.append("text")
+	
+	bars.append("text")
             .attr("class", "label")
             //y position of the label is halfway down the bar
             .attr("y", function (d) {
