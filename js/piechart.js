@@ -19,10 +19,10 @@ var svg =  d3.select("#pieFTAchart").append("svg").attr("width",300).attr("heigh
 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 
-var color =["Blue","Orange", ""]
+
 var color = d3.scaleOrdinal()
-  .domain(["FTA", "2PA", "3PA"])
-  .range(d3.schemeDark2);
+  .domain(["FTA", "2PA", "3PA"]);
+ 
 
 var g = svg.append("g")
 		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
