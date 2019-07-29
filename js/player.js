@@ -14,7 +14,7 @@ d3.json('Roster.json',function (data) {
     
 
   var html = '<div class="row" style="margin-right: 15px;margin-left: 15px;">'+
-            '<div class="col" style="max-width: 30%;"> <img style="height=200px" src = "' + filteredData[0]["imgURL"] +'"></img> </div>'+
+            '<div class="col" style="max-width: 30%;"> <img style="height:200px" src = "' + filteredData[0]["imgURL"] +'"></img> </div>'+
             '<div class="col"> <div class="row"> <label>' + playerName +  '</label> </div> ' +
       '<div class="row"> <label> Position: ' + filteredData[0]["pos"] +  '</label> </div> ' +
       '<div class="row"> <label> Height : ' + filteredData[0]["hgt"] +  '</label> </div> ' +
