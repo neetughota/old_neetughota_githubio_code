@@ -57,7 +57,7 @@ var g = svg.append("g")
               .style("left", d3.event.pageX - 50 + "px")
               .style("top", d3.event.pageY - 70 + "px")
               .style("display", "inline-block")
-              .html((data_ready[i].data.key) + "<br>" +  + (data_ready[i].data.value));
+              .html((d.data.key) + "<br>" +  + (d.data.value));
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");})
 	.attr("stroke", "white")
