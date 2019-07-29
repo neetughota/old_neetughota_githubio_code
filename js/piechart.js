@@ -31,12 +31,17 @@ d3.csv("data.csv", function(error, data) {
   	if (error) throw error;
   	var filteredData =  data.filter(function(d) {  if( d.Name == playerName) {return d};});
 	
-  svg.selectAll("path")
-  .data(filteredData[0])
-  .enter()
-  .append("path")
-  .attr("d",arc)
-  .attr("fill",function(d,i) { return color[i];})
+	var newData ={};
+	newData.FTA = filteredData[0]["FTA"];
+	newData["2PA"] = filteredData[0]["2PA"];
+	newData["3PA"] = filteredData[0]["3PA"];
+	
+	svg.selectAll("path")
+	  .data(newData)
+	  .enter()
+	  .append("path")
+	  .attr("d",arc)
+	  .attr("fill",function(d,i) { return color[i];})
   
   
   	
