@@ -54,7 +54,10 @@ d3.json("Roster.json", function(error, data) {
             .append("g")
 
 	
-    bars
+    g.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("g")
       .enter().append("rect")
         .attr("class", "bar")
         .attr("x", 0)
