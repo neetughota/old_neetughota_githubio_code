@@ -1,5 +1,5 @@
 
-var arc = d3.arc().innerRadius(0).outerRadius(100);
+
 
 var playerName = decodeURI(getUrlVars()["player"]);
 
@@ -11,7 +11,7 @@ function getUrlVars() {
   return vars;
 }
 
-var svg =  d3.select("#pieFTAchart").append("svg").attr("width",300).attr("height",250),
+var svg =  d3.select("#pieFTAchart").append("svg").attr("width",300).attr("height",300),
     margin = {top: 20, right: 20, bottom: 30, left: 80},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
@@ -19,12 +19,14 @@ var svg =  d3.select("#pieFTAchart").append("svg").attr("width",300).attr("heigh
 //var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 
+var radius = Math.min(width, height) / 2 - margin.top;
 
 var color = ["Red","Blue", "Yellow"];
  
+var arc = d3.arc().innerRadius(0).outerRadius(radius);
 
 var g = svg.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		.attr("transform", "translate(" +width/2 + "," + height/2 + ")");
   
 d3.csv("data.csv", function(error, data) {
   	if (error) throw error;
