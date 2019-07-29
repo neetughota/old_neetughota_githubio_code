@@ -14,12 +14,12 @@ var valueline = d3.line()
 
 // define the 2nd line
 var valueline2 = d3.line()
-    .x(function(d) { return x(d.2PA); })
-    .y(function(d) { return y(d.2PM); });
+    .x(function(d) { return x(d["2PA"]); })
+    .y(function(d) { return y(d["2PM"]); });
 
 var valueline3 = d3.line()
-    .x(function(d) { return x(d.3PA); })
-    .y(function(d) { return y(d.3PM); });
+    .x(function(d) { return x(d["3PA"]); })
+    .y(function(d) { return y(d["3PM"]); });
     
 // append the svg obgect to the body of the page
 // appends a 'group' element to 'svg'
@@ -37,9 +37,9 @@ d3.csv("data.csv", function(error, data) {
 
 
   // Scale the range of the data
-  x.domain(d3.extent(data, function(d) { return  Math.max(Math.max(d.FTA, d.2PA), d.3PA) ; }));
+  x.domain(d3.extent(data, function(d) { return  Math.max(Math.max(d.FTA, d["2PA"]), d["3PA"]) ; }));
   y.domain([0, d3.max(data, function(d) {
-	  return Math.max(Math.max(d.FTM, d.2PA), d.3PM) ; })]);
+	  return Math.max(Math.max(d.FTM, d["2PA"]), d["3PM"]) ; })]);
 
   // Add the valueline path.
   svg.append("path")
