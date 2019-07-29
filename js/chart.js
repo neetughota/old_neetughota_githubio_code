@@ -10,17 +10,7 @@ function getUrlVars() {
   return vars;
 }
 
-var svg =  d3.select("#linechart").append("svg").attr("width",660).attr("height",300),
-    margin = {top: 20, right: 20, bottom: 30, left: 80},
-    width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom;
-  
-var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-  
 
-var g = svg.append("g")
-		.attr("transform", "translate("+ margin.top + "," + margin.top  + ")");
-  
 d3.json("Roster.json", function(error, data) {
   	if (error) throw error;
   	var filteredData =  data.players.filter(function(d) {  if( d.name == playerName) {return d};});
@@ -32,6 +22,17 @@ d3.json("Roster.json", function(error, data) {
 		newData.push(newObj);
 	}
   	//data.sort(function(a, b) { return a.value - b.value; });
+	var svg =  d3.select("#linechart").append("svg").attr("width",660).attr("height",300),
+    	margin = {top: 20, right: 20, bottom: 30, left: 80},
+    	width = +svg.attr("width") - margin.left - margin.right,
+   	 height = +svg.attr("height") - margin.top - margin.bottom;
+  
+	var tooltip = d3.select("#linechart").append("div").attr("class", "toolTip");
+  
+
+	var g = svg.append("g")
+		.attr("transform", "translate("+ margin.top + "," + margin.top  + ")");
+  
   	var x = d3.scaleLinear().range([0, width]);
 	var y = d3.scaleBand().range([height, 0]).padding(.1);
 	var color = d3.scaleOrdinal(d3.schemeCategory10);
