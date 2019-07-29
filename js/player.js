@@ -8,13 +8,10 @@ function getUrlVars() {
   });
   return vars;
 }
-d3.json('2018-19.NBA.Roster.json',function (data) {
+d3.json('Roster.json',function (data) {
   
   var filteredData =  data.filter(function(d) {
-          if( d["Name"] == playerName )
-          { 
-              return d;
-          } 
+          data.players.filter(function(d) {  if( d.name == playerName) {return d};})
     });
 
   var html = '<div class="row" style="margin-right: 15px;margin-left: 15px;">'+
