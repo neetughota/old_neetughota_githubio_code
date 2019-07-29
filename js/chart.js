@@ -48,8 +48,13 @@ d3.json("Roster.json", function(error, data) {
         .attr("class", "y axis")
         .call(d3.axisLeft(y));
 
-    g.selectAll(".bar")
-        .data(newData)
+	 var bars = g.selectAll(".bar")
+            .data(data)
+            .enter()
+            .append("g")
+
+	
+    bars
       .enter().append("rect")
         .attr("class", "bar")
         .attr("x", 0)
@@ -66,9 +71,7 @@ d3.json("Roster.json", function(error, data) {
         })
     		.on("mouseout", function(d){ tooltip.style("display", "none");});
 	
-	g.selectAll(".bar")
-	.enter()
-            .append("g")
+	bars
 	.append("text")
             .attr("class", "label")
             //y position of the label is halfway down the bar
