@@ -10,7 +10,7 @@ function getUrlVars() {
   return vars;
 }
 
-var svg =  d3.select("#linechart").append("svg").attr("width",960).attr("height",500),
+var svg =  d3.select("#linechart").append("svg").attr("width",460).attr("height",300),
     margin = {top: 20, right: 20, bottom: 30, left: 80},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
