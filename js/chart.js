@@ -18,8 +18,8 @@ var svg =  d3.select("#linechart").append("svg").attr("width",960).attr("height"
 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 var x = d3.scaleLinear().range([0, width]);
-//var y = d3.scaleLinear().range([height, 0]);
-var y = d3.scale.ordinal().rangeRoundBands([height, 0], .1)
+var y = d3.scaleBand().range([height, 0]).padding(.1);
+
           
 var cs = d3.scaleLinear().range([0,width]);
 
