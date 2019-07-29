@@ -45,11 +45,14 @@ d3.csv("data.csv", function(error, data) {
 	var data_ready = pie([newData.FTA ,newData["2PA"],newData["3PA"]]);
 	
 	g.selectAll("path")
-	  .data(pie(newData))
+	  .data(data_ready)
 	  .enter()
 	  .append("path")
 	  .attr("d",arc)
-	  .attr("fill",function(d,i) { return color[i];})
+	  .attr("fill",function(d,i) { 
+		console.log(d);
+		return color[i];
+	})
   
   
   	
