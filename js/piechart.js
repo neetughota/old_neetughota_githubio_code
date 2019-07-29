@@ -29,10 +29,10 @@ var g = svg.append("g")
   
 d3.csv("data.csv", function(error, data) {
   	if (error) throw error;
-  	var filteredData =  data.filter(function(d) {  if( d.name == playerName) {return d};});
+  	var filteredData =  data.filter(function(d) {  if( d.Name == playerName) {return d};});
 	
   svg.selectAll("path")
-  .data(filteredData)
+  .data(filteredData[0])
   .enter()
   .append("path")
   .attr("d",arc)
