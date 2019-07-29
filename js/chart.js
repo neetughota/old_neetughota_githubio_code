@@ -31,7 +31,7 @@ d3.json("Roster.json", function(error, data) {
 	newData.RatingValue =[]; 
 	for (var key in filteredData[0]["ratings"][0]) {
   		newData.Rating.push( key);
-		newData.Rating.push( filteredData[0]["ratings"][0][key]);
+		newData.RatingValue.push( filteredData[0]["ratings"][0][key]);
 	}
   	//data.sort(function(a, b) { return a.value - b.value; });
   
