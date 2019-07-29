@@ -55,7 +55,7 @@ d3.json("Roster.json", function(error, data) {
       .enter().append("rect")
         .attr("class", "bar")
         .attr("x", 0)
-        .attr("height", y.rangeBand())
+        .attr("height", y.bandwidth())
         .attr("y", function(d) { return y(d.Rating); })
         .attr("width", function(d) { return x(d.RatingValue); })
         .on("mousemove", function(d){
