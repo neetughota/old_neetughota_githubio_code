@@ -22,7 +22,7 @@ var y = d3.scaleBand().range([height, 0]).padding(.1);
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var g = svg.append("g")
-		.attr("transform", "translate("+ margin.top + "," + margin.top + height + ")");
+		.attr("transform", "translate("+ margin.top + "," + margin.top + parseInt(height) + ")");
   
 d3.json("Roster.json", function(error, data) {
   	if (error) throw error;
