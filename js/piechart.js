@@ -31,18 +31,16 @@ d3.csv("data.csv", function(error, data) {
   	if (error) throw error;
   	var filteredData =  data.filter(function(d) {  if( d.Name == playerName) {return d};});
 	
-	var pie = d3.pie();
-    	//	.value(function(d) {return d.value; })
-    	//	.sort(function(a, b) { console.log(a) ; return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
-  
-	
-  
 	var newData ={};
 	newData.FTA =  parseInt(filteredData[0]["FTA"]);
 	newData["2PA"] = parseInt(filteredData[0]["2PA"]);
 	newData["3PA"] = parseInt(filteredData[0]["3PA"]);
 	
-	var data_ready = pie([newData.FTA ,newData["2PA"],newData["3PA"]]);
+	var pie = d3.pie()
+   		.value(function(d) {return d.value; })
+    		.sort(function(a, b) { console.log(a) ; return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+  	
+	var data_ready = pie(d3.entries(newData));
 	
 	g.selectAll("path")
 	  .data(data_ready)
