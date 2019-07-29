@@ -69,10 +69,14 @@ var g = svg.append("g")
 	  .data(data_ready)
 	  .enter()
   	.append('text')
-  	.text(function(d){ return "grp " + d.data.key})
-  	.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  })
+  	.text(function(d){ 
+	  return "grp " + d.data.key ;
+  	})
+  	.attr("transform", function(d) { 
+	  return "translate(" + arc.centroid(d) + ")"; 
+  	})
   	.style("text-anchor", "middle")
-  	.style("font-size", 17)
+  	.style("font-size", 17);
 
   	
 
