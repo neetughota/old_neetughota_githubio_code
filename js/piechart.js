@@ -65,7 +65,15 @@ var g = svg.append("g")
     .style("opacity", 1);
 	
   
-  
+  g.selectAll("path")
+	  .data(data_ready)
+	  .enter()
+  	.append('text')
+  	.text(function(d){ return "grp " + d.data.key})
+  	.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  })
+  	.style("text-anchor", "middle")
+  	.style("font-size", 17)
+
   	
 
 });
