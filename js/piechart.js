@@ -37,7 +37,7 @@ d3.csv("data.csv", function(error, data) {
 	newData["3PA"] = filteredData[0]["3PA"];
 	
 	g.selectAll("path")
-	  .data(newData)
+	  .data(pie(newData))
 	  .enter()
 	  .append("path")
 	  .attr("d",arc)
