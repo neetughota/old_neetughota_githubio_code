@@ -35,8 +35,8 @@ d3.json("Roster.json", function(error, data) {
 	}
   	//data.sort(function(a, b) { return a.value - b.value; });
   
-  	x.domain([0, d3.max(data, function(d){ return  d.RatingValue ; })])
-        y.domain(data.map(function(d) { return d.Rating }));
+  	x.domain([0, d3.max(newData, function(d){ return  d.RatingValue ; })])
+        y.domain(newData.map(function(d) { return d.Rating }));
 
     g.append("g")
         .attr("class", "x axis")
@@ -54,7 +54,7 @@ d3.json("Roster.json", function(error, data) {
         .attr("x", 0)
         .attr("height", y.bandwidth())
         .attr("y", function(d) { return y(d.Rating); })
-        .attr("width", function(d) { return x(d.value); })
+        .attr("width", function(d) { return x(d.RatingValue); })
         .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
