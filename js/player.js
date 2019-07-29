@@ -8,7 +8,7 @@ function getUrlVars() {
   });
   return vars;
 }
-d3.csv('data.csv',function (data) {
+d3.json('2018-19.NBA.Roster.json',function (data) {
   
   var filteredData =  data.filter(function(d) {
           if( d["Name"] == playerName )
