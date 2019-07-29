@@ -18,7 +18,9 @@ var svg =  d3.select("#linechart").append("svg").attr("width",960).attr("height"
 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 var x = d3.scaleLinear().range([0, width]);
-var y = d3.scaleLinear().range([height, 0]);
+//var y = d3.scaleLinear().range([height, 0]);
+var y = d3.scale.ordinal().rangeRoundBands([height, 0], .1)
+          
 var cs = d3.scaleLinear().range([0,width]);
 
 var g = svg.append("g")
@@ -53,7 +55,7 @@ d3.json("Roster.json", function(error, data) {
       .enter().append("rect")
         .attr("class", "bar")
         .attr("x", 0)
-        .attr("height", y.bandwidth())
+        .attr("height", y.rangeBand())
         .attr("y", function(d) { return y(d.Rating); })
         .attr("width", function(d) { return x(d.RatingValue); })
         .on("mousemove", function(d){
