@@ -17,12 +17,9 @@ var svg =  d3.select("#linechart").append("svg").attr("width",660).attr("height"
   
 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
-var x = d3.scaleLinear().range([0, width]);
-var y = d3.scaleBand().range([height, 0]).padding(.1);
-var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var g = svg.append("g")
-		.attr("transform", "translate("+ margin.top + "," + margin.top + parseInt(height) + ")");
+		.attr("transform", "translate("+ margin.top + "," + margin.top  + ")");
   
 d3.json("Roster.json", function(error, data) {
   	if (error) throw error;
@@ -35,16 +32,20 @@ d3.json("Roster.json", function(error, data) {
 		newData.push(newObj);
 	}
   	//data.sort(function(a, b) { return a.value - b.value; });
-  
+  	var x = d3.scaleLinear().range([0, width]);
+	var y = d3.scaleBand().range([height, 0]).padding(.1);
+	var color = d3.scaleOrdinal(d3.schemeCategory10);
+
   	x.domain([0, d3.max(newData, function(d){ return  d.RatingValue ; })])
         y.domain(newData.map(function(d) { return d.Rating }));
  	color.domain(newData.map(function(d) { return d.Rating }));
-    g.append("g")
+    
+	g.append("g")
         .attr("class", "x axis")
        	.attr("transform", "translate(0," + height + ")")
       	.call(d3.axisBottom(x).ticks(10).tickFormat(function(d) { return parseInt(d ); }).tickSizeInner([2]));
 
-    g.append("g")
+    	g.append("g")
         .attr("class", "y axis")
         .call(d3.axisLeft(y));
 
