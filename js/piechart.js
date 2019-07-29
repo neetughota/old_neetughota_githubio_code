@@ -20,8 +20,7 @@ var svg =  d3.select("#pieFTAchart").append("svg").attr("width",300).attr("heigh
   
 
 
-var color = d3.scaleOrdinal()
-  .domain(["FTA", "2PA", "3PA"]);
+var color = ["Red","Blue", "Yellow"];
  
 
 var g = svg.append("g")
@@ -48,7 +47,7 @@ d3.csv("data.csv", function(error, data) {
 	  .append("path")
 	  .attr("d",arc)
 	  .attr("fill",function(d,i) { 
-		console.log(d);
+	
 		return color[i];
 	})
   
