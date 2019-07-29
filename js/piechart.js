@@ -36,7 +36,7 @@ d3.csv("data.csv", function(error, data) {
 	newData["2PA"] = filteredData[0]["2PA"];
 	newData["3PA"] = filteredData[0]["3PA"];
 	
-	svg.selectAll("path")
+	g.selectAll("path")
 	  .data(newData)
 	  .enter()
 	  .append("path")
