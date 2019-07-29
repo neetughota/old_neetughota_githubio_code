@@ -27,8 +27,8 @@ d3.json("Roster.json", function(error, data) {
   	if (error) throw error;
   	var filteredData =  data.players.filter(function(d) {  if( d.name == playerName) {return d};});
 	var newData = {};
-	var newData.Rating =[]; 
-	var newData.RatingValue =[]; 
+	var newData["Rating"] =[]; 
+	var newData["RatingValue"] =[]; 
 	for (var key in filteredData[0]["ratings"][0]) {
   		newData.Rating.push( key);
 		newData.Rating.push( filteredData[0]["ratings"][0][key]);
