@@ -41,7 +41,7 @@ d3.json("Roster.json", function(error, data) {
     g.append("g")
         .attr("class", "x axis")
        	.attr("transform", "translate(0," + height + ")")
-      	.call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d / 1000); }).tickSizeInner([-height]));
+      	.call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d ); }).tickSizeInner([2]));
 
     g.append("g")
         .attr("class", "y axis")
