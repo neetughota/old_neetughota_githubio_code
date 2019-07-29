@@ -16,7 +16,7 @@ var svg =  d3.select("#pieFTAchart").append("svg").attr("width",300).attr("heigh
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
   
-var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+//var tooltip = d3.select("body").append("div").attr("class", "toolTip");
   
 
 
