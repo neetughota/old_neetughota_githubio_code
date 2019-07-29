@@ -27,7 +27,7 @@ d3.csv('data.csv',function (data) {
       '<div class="col"> <label> Prior: Boston Celtics </label> </div> <div class="col"> <label> Age:  22 </label> </div>'+   
       '</div>';
    
-   document.getElementById('container').insertAdjacentHTML('beforeend',html);
+   document.getElementById('container').insertAdjacentHTML('afterbegin',html);
   
    //document.write(html);
 })
