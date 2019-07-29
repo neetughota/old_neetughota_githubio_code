@@ -26,7 +26,7 @@ d3.csv("data.csv", function(error, data) {
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom;
   
-//var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+var tooltip = d3.select("#pieFTAchart").append("div").attr("class", "toolTip");
   
 
 var radius = Math.min(width, height) / 2 - margin.top;
@@ -52,7 +52,15 @@ var g = svg.append("g")
 	  .attr("fill",function(d,i) { 
 	
 		return color[i];
-	})
+	}).on("mousemove", function(d){
+            tooltip
+              .style("left", d3.event.pageX - 50 + "px")
+              .style("top", d3.event.pageY - 70 + "px")
+              .style("display", "inline-block")
+              .html((data_ready.data.key) + "<br>" +  + (data_ready.data.value));
+        })
+    		.on("mouseout", function(d){ tooltip.style("display", "none");});
+	
   
   
   	
