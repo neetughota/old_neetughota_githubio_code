@@ -31,7 +31,7 @@ d3.csv("data.csv", function(error, data) {
   	if (error) throw error;
   	var filteredData =  data.filter(function(d) {  if( d.name == playerName) {return d};});
 	
-  svg.selectAtll("path")
+  svg.selectAll("path")
   .data(filteredData)
   .enter()
   .append("path")
