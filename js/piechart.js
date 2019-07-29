@@ -59,7 +59,10 @@ var g = svg.append("g")
               .style("display", "inline-block")
               .html((data_ready[i].data.key) + "<br>" +  + (data_ready[i].data.value));
         })
-    		.on("mouseout", function(d){ tooltip.style("display", "none");});
+    		.on("mouseout", function(d){ tooltip.style("display", "none");})
+	.attr("stroke", "white")
+    .style("stroke-width", "2px")
+    .style("opacity", 1);
 	
   
   
