@@ -46,6 +46,7 @@ d3.csv("data.csv", function(error, data) {
 	  .enter()
 	  .append("path")
 	  .attr("d",arc)
+	  .attr("class", "slice")
 	  .attr("fill",function(d,i) { 
 		return color[i];
 	}).on("mousemove", function(d,i){
