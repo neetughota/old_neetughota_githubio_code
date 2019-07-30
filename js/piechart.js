@@ -74,21 +74,7 @@ d3.csv("data.csv", function(error, data) {
     .style("opacity", 1);
 	
   
-  	g.selectAll("path")
-	.data(data_ready)
-  	.append('text')
-  	.text(function(d){ 
-	  return "grp " + d.data.key ;
-  	})
-  	.attr("transform", function(d) {                    //set the label's origin to the center of the arc
-                //we have to make sure to set these before calling arc.centroid
-                d.innerRadius = 0;
-                d.outerRadius = radius;
-                return  "translate(" +width/2 + "," + height/2 + ")";        //this gives us a pair of coordinates like [50, 50]
-            })
-            .attr("text-anchor", "middle")                          //center the text on it's origin
-  	.style("text-anchor", "middle")
-  	.style("font-size", 17);
+  	
 
 	
 
