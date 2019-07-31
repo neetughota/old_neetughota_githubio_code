@@ -54,7 +54,7 @@ d3.csv("data.csv", function(error, data) {
 	var data_ready = pie(d3.entries(newData));
 	
 	g.selectAll("path")
-	  .data([data_ready,data_ready_new])
+	  .data(data_ready)
 	  .enter()
 	  .append("path")
 	  .attr("d",arc)
